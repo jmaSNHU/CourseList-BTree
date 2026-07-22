@@ -15,7 +15,6 @@
 
 using std::string;
 using std::vector;
-using std::endl;
 
 // Course class represents Course #, name and a list of prerequistites
 class Course {
@@ -54,7 +53,7 @@ private:
 // friend ostream overload for in-order traversal printing
 std::ostream& operator<<(std::ostream& os, const Course& course)
 {
-	return os << course._courseNumber << ", " << course._name << endl;
+	return os << course._courseNumber << ", " << course._name << std::endl;
 }
 
 #endif
