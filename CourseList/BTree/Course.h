@@ -5,6 +5,9 @@
 * July 16, 2026
 */
 
+// TODO: 1) Add comments to all methods and classes
+//       2) Refactor Vector<string> to Vector<Course> 
+
 #ifndef COURSE_H
 #define COURSE_H
 
@@ -22,7 +25,7 @@ public:
 	Course() {}
 	Course(string courseNumber) : _courseNumber(courseNumber) {}
 	Course(string courseNumber, string name) : _courseNumber(courseNumber), _name(name) {}
-	Course(string courseNumber, string name, vector<Course> prerequisites) :
+	Course(string courseNumber, string name, vector<string> prerequisites) :
 		_courseNumber(courseNumber), _name(name), _prerequisites(prerequisites) {}
 
 	string getCourseNumber() const { return this->_courseNumber; }
@@ -31,7 +34,7 @@ public:
 	string getName() const { return this->_name; }
 	void setName(string name) { this->_name = name; }
 
-	vector<Course> getPrerequisites() const { return this->_prerequisites; }
+	vector<string> getPrerequisites() const { return this->_prerequisites; }
 	void addPrerequisite(string prerequisite) { this->_prerequisites.push_back(prerequisite); }
 
 	// overloaded comparison operators using the courseNumber 'key'
@@ -47,7 +50,7 @@ public:
 private:
 	string _courseNumber;
 	string _name;
-	vector<Course> _prerequisites;
+	vector<string> _prerequisites;
 };
 
 // friend ostream overload for in-order traversal printing

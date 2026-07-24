@@ -39,7 +39,7 @@ void Node<T>::inOrder()
 }
 
 template<typename T>
-Node<T>* Node<T>::search(T key)
+T Node<T>::search(T key)
 {
 	int i = 0;
 	while (i < this->numKeys && key > this->keys[i]) {
@@ -47,10 +47,10 @@ Node<T>* Node<T>::search(T key)
 	}
 
 	if (i < this->numKeys && this->keys[i] == key) {
-		return this;
+		return this->keys[i];
 	}
 	if (isLeafNode) {
-		return nullptr;
+		return T();
 	}
 
 	// recursively search this node's i'th child 
@@ -96,7 +96,7 @@ void Node<T>::split(int index, Node<T>* child)
 	newNode->numKeys = this->minDegree - 1;
 
 	//copy keys from child to new node
-	for (int j = 0; j < this->minDegree; ++j) {
+	for (int j = 0; j < this->minDegree - 1; ++j) {
 		newNode->keys[j] = child->keys[j + this->minDegree];
 	}
 
@@ -126,13 +126,13 @@ void Node<T>::split(int index, Node<T>* child)
 }
 
 template<typename T>
-Node<T>* BTree<T>::search(T key)
+T BTree<T>::search(T key)
 {
 	// empty tree
-	if (root == nullptr) return nullptr;
+	if (root == nullptr) return T();
 
 	// recursively search
-	root->search(key);
+	return root->search(key);
 }
 
 template<typename T>

@@ -5,6 +5,14 @@
 * July 16, 2026
 */
 
+// TODO: 1) Add comments to all methods and classes
+//		 2) Add a method to return the number of nodes in the tree
+//       3) Add a method to return the height of the tree
+//       4) Add a method to return the number of keys in the tree
+//       5) Add a method to return the number of leaves in the tree
+//       6) Remove the 'using namespace std;' statement and use std:: prefix for all standard library types and functions
+//       7) Wrap expression in parentheses to avoid ambiguity in operator precedence
+
 
 #ifndef B_TREE_H
 #define B_TREE_H
@@ -31,7 +39,7 @@ public:
 	~Node();							   // destructor
 
 	void inOrder();						   // performs inorder traversal and prints node data
-	Node<T>* search(T key);				   // search by key returns matching Node pointer
+	T search(T key);				   // search by key returns matching Node pointer
 	void insertIfNotFull(T key);		   // inserts key in the correct node
 	void split(int index, Node<T>* child); // splits a full child node
 
@@ -56,7 +64,7 @@ public:
 	~BTree() { delete root; }
 
 	void inOrder();
-	Node<T>* search(T key);
+	T search(T key);
 	void insert(T key);
 private:
 	Node<T>* root;
