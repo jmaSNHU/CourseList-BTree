@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Initialize a Course BTree with min degree 3
-	BTree<Course>* bst = new BTree<Course>(3);
+	BTree<Course>* bTree = new BTree<Course>(3);
 	Course course;
 
 	std::cout << "Welcome to course planner." << std::endl;
@@ -76,14 +76,14 @@ int main(int argc, char* argv[]) {
 		case 1:
 			// load each csv file passed to the program (or default file)
 			for (std::string csv : csvFiles) {
-				loadCourses(csv, bst);
+				loadCourses(csv, bTree);
 			}
 			break;
 
 		case 2:
 			// print course list in order of course #
 			std::cout << "Here is a sample schedule:\n\n";
-			bst->inOrder([](Course& course) {
+			bTree->inOrder([](Course& course) {
 				std::cout << course << std::endl;
 				});
 			break;
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
 				c = toupper(c);
 
 			// search tree for matching course number
-			course = bst->search(courseKey);
+			course = bTree->search(courseKey);
 
 			if (!course.getCourseNumber().empty()) {
 				std::cout << course.getCourseNumber() << ", " << course.getName() << std::endl;
@@ -185,7 +185,7 @@ void loadCourses(std::string filePath, BTree<Course>* bTree) {
 
 
 void updateCoursePrerequistites(BTree<Course>* courseBTree) {
-	// cancel validation if bst pointer is null
+	// cancel validation if bTree pointer is null
 	if (courseBTree == nullptr) {
 		return;
 	}
