@@ -11,7 +11,6 @@
 #define B_TREE_H
 
 #include<functional>
-#include<iostream>
 
 
 // forward declaration of types so the compiler knows they exist
