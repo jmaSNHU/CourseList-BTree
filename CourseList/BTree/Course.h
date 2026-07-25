@@ -3,10 +3,9 @@
 * Jacob Ard
 * CS-499 Capstone
 * July 16, 2026
+* 
 */
 
-// TODO: 1) Add comments to all methods and classes
-//       2) Refactor Vector<string> to Vector<Course> 
 
 #ifndef COURSE_H
 #define COURSE_H
@@ -16,15 +15,19 @@
 #include<sstream>
 #include<string>
 
-// Course class represents Course #, name and a list of prerequistites
+/// <summary>
+/// Course class represents Course #, name and a list of prerequistites
+/// </summary>
 class Course {
 public:
+	// Constructors
 	Course() {}
 	Course(std::string courseNumber) : _courseNumber(courseNumber) {}
 	Course(std::string courseNumber, std::string name) : _courseNumber(courseNumber), _name(name) {}
 	Course(std::string courseNumber, std::string name, std::vector<Course> prerequisites) :
 		_courseNumber(courseNumber), _name(name), _prerequisites(prerequisites) {}
 
+	// Getters and Setters for courseNumber, name, and prerequisites
 	std::string getCourseNumber() const { return this->_courseNumber; }
 	void setCourseNumber(std::string courseNumber) { this->_courseNumber = courseNumber; }
 
@@ -42,10 +45,6 @@ public:
 	// compare string key to object's courseNumber (for convenience)
 	bool operator==(const std::string& courseNum) const { return this->_courseNumber == courseNum; }
 
-
-	// friend ostream method
-	friend std::ostream& operator<<(std::ostream& os, const Course& course);
-
 private:
 	std::string _courseNumber;
 	std::string _name;
@@ -55,7 +54,7 @@ private:
 // friend ostream overload for in-order traversal printing
 std::ostream& operator<<(std::ostream& os, const Course& course)
 {
-	return os << course._courseNumber << " - " << course._name;
+	return os << course.getCourseNumber() << " - " << course.getName();
 }
 
 #endif
