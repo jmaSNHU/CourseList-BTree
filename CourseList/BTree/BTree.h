@@ -27,8 +27,7 @@ template<typename T> class BTree;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 template<typename T>
-class Node {
-public:
+struct Node {
 	Node(int minDegree, bool isLeafNode);  
 	~Node();							  
 
@@ -41,18 +40,12 @@ public:
 	// splits a full child node
 	void split(int index, Node<T>* child); 
 
-	// grants other Nodes access to private members
-	friend class BTree<T>;
-
-private:
 	T* keys;		    // array of keys
 	Node<T>** children; // array of child node pointers
 
 	int numKeys;	    // number of keys used to allocate keys array
 	bool isLeafNode;    // returns true if node has no children
 	int minDegree;      // minimum degree
-
-
 };
 
 template<typename T>

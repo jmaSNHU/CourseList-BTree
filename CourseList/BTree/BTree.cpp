@@ -149,14 +149,14 @@ void Node<T>::split(int index, Node<T>* child)
 	newNode->numKeys = this->minDegree - 1;
 
 	//copy keys from child to new node
-	for (int j = 0; j < this->minDegree - 1; ++j) {
-		newNode->keys[j] = child->keys[j + this->minDegree];
+	for (int i = 0; i < this->minDegree - 1; ++i) {
+		newNode->keys[i] = child->keys[i + this->minDegree];
 	}
 
 	if (!child->isLeafNode) {
 		// copy child node's children to new node
-		for (int j = 0; j < this->minDegree; ++j) {
-			newNode->children[j] = child->children[j + this->minDegree];
+		for (int i = 0; i < this->minDegree; ++i) {
+			newNode->children[i] = child->children[i + this->minDegree];
 		}
 	}
 
@@ -164,15 +164,15 @@ void Node<T>::split(int index, Node<T>* child)
 	child->numKeys = this->minDegree - 1;
 
 	// shift parent (this) node's children to make room for new Node
-	for (int j = this->numKeys; j >= index + 1; --j) {
-		this->children[j + 1] = this->children[j];
+	for (int i = this->numKeys; i >= index + 1; --i) {
+		this->children[i + 1] = this->children[i];
 	}
 	// insert the new Node
 	this->children[index + 1] = newNode;
 
 	// shift parent (this) node's keys to accept key index from split node
-	for (int j = this->numKeys - 1; j >= index; --j) {
-		this->keys[j + 1] = this->keys[j];
+	for (int i = this->numKeys - 1; i >= index; --i) {
+		this->keys[i + 1] = this->keys[i];
 	}
 	this->keys[index] = child->keys[this->minDegree - 1];
 	++this->numKeys;
