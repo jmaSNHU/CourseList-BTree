@@ -14,4 +14,6 @@ Run or deploy the program from Visual Studio or compile in Unix enivronments wit
 
 ```g++ main.cpp BTree.cpp```
 
+```./a.out```
+
 <img width="572" height="941" alt="CLI" src="https://github.com/user-attachments/assets/214f7a86-3a01-4bca-9444-026965daa227" />
