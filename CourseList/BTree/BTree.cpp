@@ -1,5 +1,19 @@
+/*
+* BTree.cpp
+* Jacob Ard
+* CS-499 Capstone
+* Algorithms & Data Structures Enhancement
+* July 22, 2026
+*/
+
 #include "Btree.h"
 
+/// <summary>
+/// Node Constructor
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="minDegree"></param>
+/// <param name="isLeafNode"></param>
 template<typename T>
 Node<T>::Node(int minDegree, bool isLeafNode)
 {
@@ -11,45 +25,71 @@ Node<T>::Node(int minDegree, bool isLeafNode)
 	this->numKeys = 0;
 }
 
+/// <summary>
+/// Node Destructor
+/// </summary>
+/// <typeparam name="T"></typeparam>
 template<typename T>
 Node<T>::~Node()
 {
+	// free the dynamic keys array
 	delete[] this->keys;
 	if (!isLeafNode) {
+		// delete child nodes
 		for (int i = 0; i <= this->numKeys; ++i) {
 			delete this->children[i];
 		}
 	}
+	// free the dynamic child node array
 	delete[] this->children;
 }
 
+/// <summary>
+/// Performs in-order traversal
+/// *Accepts a function(T) that is called on each
+/// object in the BTree*
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="func"></param>
 template<typename T>
-void Node<T>::inOrder()
+void Node<T>::inOrder(const std::function<void(T&)>& func)
 {
 	int i;
 	for (i = 0; i < this->numKeys; ++i) {
+		// traverse children in order before printing
 		if (!isLeafNode) {
-			this->children[i]->inOrder();
+			this->children[i]->inOrder(func);
 		}
-		std::cout << " " << this->keys[i];
+		// calls the passed function argument on this key T
+		func(this->keys[i]);
 	}
+	// recursive traversal last childs subtree
 	if (!isLeafNode) {
-		this->children[i]->inOrder();
+		this->children[i]->inOrder(func);
 	}
 }
 
+/// <summary>
+/// Perform Recursive search and returns a matching key T
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="key"></param>
+/// <returns></returns>
 template<typename T>
 T Node<T>::search(T key)
 {
 	int i = 0;
+	// iterate through keys 
 	while (i < this->numKeys && key > this->keys[i]) {
 		++i;
 	}
 
+	// return the match
 	if (i < this->numKeys && this->keys[i] == key) {
 		return this->keys[i];
 	}
 	if (isLeafNode) {
+		// return default T if not found
 		return T();
 	}
 
@@ -57,6 +97,12 @@ T Node<T>::search(T key)
 	return this->children[i]->search(key);
 }
 
+/// <summary>
+/// Inserts a new key if space is available,
+/// Splits child node if full
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="key"></param>
 template<typename T>
 void Node<T>::insertIfNotFull(T key)
 {
@@ -88,6 +134,13 @@ void Node<T>::insertIfNotFull(T key)
 	}
 }
 
+/// <summary>
+/// Splits a child node into two and moves the median key
+/// to the parent
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="index"></param>
+/// <param name="child"></param>
 template<typename T>
 void Node<T>::split(int index, Node<T>* child)
 {
@@ -125,6 +178,12 @@ void Node<T>::split(int index, Node<T>* child)
 	++this->numKeys;
 }
 
+/// <summary>
+/// Calls the Root Nodes recursve search method
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="key"></param>
+/// <returns></returns>
 template<typename T>
 T BTree<T>::search(T key)
 {
@@ -135,16 +194,26 @@ T BTree<T>::search(T key)
 	return root->search(key);
 }
 
+/// <summary>
+/// Starts the In-Order traversal on the root node
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="func"></param>
 template<typename T>
-void BTree<T>::inOrder()
+void BTree<T>::inOrder(const std::function<void(T&)>& func)
 {
-	if (root != nullptr) root->inOrder();
-	std::cout << std::endl;
+	if (root != nullptr) root->inOrder(func);
 }
 
+/// <summary>
+/// Inserts a new Node into the B-Tree
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="key"></param>
 template<typename T>
 void BTree<T>::insert(T key)
 {
+	// insert the root node
 	if (this->root == nullptr) {
 		this->root = new Node<T>(this->minDegree, true);
 		this->root->keys[0] = key;
@@ -152,7 +221,7 @@ void BTree<T>::insert(T key)
 		return;
 	}
 
-	// handle split root
+	// split root if node is full
 	if (this->root->numKeys == 2 * this->minDegree - 1) {
 		Node<T>* newNode = new Node<T>(this->minDegree, false);
 		newNode->children[0] = this->root;
@@ -163,6 +232,7 @@ void BTree<T>::insert(T key)
 		newNode->children[i]->insertIfNotFull(key);
 		this->root = newNode;
 	}
+	// insert key in available node
 	else {
 		this->root->insertIfNotFull(key);
 	}

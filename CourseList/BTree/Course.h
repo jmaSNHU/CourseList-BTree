@@ -22,7 +22,7 @@ public:
 	Course() {}
 	Course(std::string courseNumber) : _courseNumber(courseNumber) {}
 	Course(std::string courseNumber, std::string name) : _courseNumber(courseNumber), _name(name) {}
-	Course(std::string courseNumber, std::string name, std::vector<std::string> prerequisites) :
+	Course(std::string courseNumber, std::string name, std::vector<Course> prerequisites) :
 		_courseNumber(courseNumber), _name(name), _prerequisites(prerequisites) {}
 
 	std::string getCourseNumber() const { return this->_courseNumber; }
@@ -31,8 +31,9 @@ public:
 	std::string getName() const { return this->_name; }
 	void setName(std::string name) { this->_name = name; }
 
-	std::vector<std::string> getPrerequisites() const { return this->_prerequisites; }
-	void addPrerequisite(std::string prerequisite) { this->_prerequisites.push_back(prerequisite); }
+	std::vector<Course> getPrerequisites() const { return this->_prerequisites; }
+	void addPrerequisite(Course prerequisite) { this->_prerequisites.push_back(prerequisite); }
+	void setPrerequisites(std::vector<Course> prerequisites) { this->_prerequisites = prerequisites; }
 
 	// overloaded comparison operators using the courseNumber 'key'
 	bool operator<(const Course& rhs) const { return this->_courseNumber < rhs._courseNumber; }
@@ -41,19 +42,20 @@ public:
 	// compare string key to object's courseNumber (for convenience)
 	bool operator==(const std::string& courseNum) const { return this->_courseNumber == courseNum; }
 
+
 	// friend ostream method
 	friend std::ostream& operator<<(std::ostream& os, const Course& course);
 
 private:
 	std::string _courseNumber;
 	std::string _name;
-	std::vector<std::string> _prerequisites;
+	std::vector<Course> _prerequisites;
 };
 
 // friend ostream overload for in-order traversal printing
 std::ostream& operator<<(std::ostream& os, const Course& course)
 {
-	return os << course._courseNumber << ", " << course._name << std::endl;
+	return os << course._courseNumber << " - " << course._name;
 }
 
 #endif
