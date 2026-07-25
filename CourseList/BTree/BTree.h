@@ -2,6 +2,7 @@
 * BTree.h
 * Jacob Ard
 * CS-499 Capstone
+* Algorithms & Data Structures Enhancement
 * July 16, 2026
 */
 
@@ -9,6 +10,7 @@
 #ifndef B_TREE_H
 #define B_TREE_H
 
+#include<functional>
 #include<iostream>
 
 
@@ -25,28 +27,25 @@ template<typename T> class BTree;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 template<typename T>
-class Node {
-public:
-	Node(int minDegree, bool isLeafNode);  // constructor
-	~Node();							   // destructor
+struct Node {
+	Node(int minDegree, bool isLeafNode);  
+	~Node();							  
 
-	void inOrder();						   // performs inorder traversal and prints node data
-	Node<T>* search(T key);				   // search by key returns matching Node pointer
-	void insertIfNotFull(T key);		   // inserts key in the correct node
-	void split(int index, Node<T>* child); // splits a full child node
+	// performs inorder traversal and calls the provided function
+	void inOrder(const std::function<void(T&)>& func); 
+	// search by key returns matching Node pointer
+	T search(T key);				   
+	// inserts key in the correct node
+	void insertIfNotFull(T key);	
+	// splits a full child node
+	void split(int index, Node<T>* child); 
 
-	// grants other Nodes access to private members
-	friend class BTree<T>;
+	T* keys;		    // array of keys
+	Node<T>** children; // array of child node pointers
 
-private:
-	T* keys;		 // array of keys
-	Node<T>** children;		 // array of child node pointers
-
-	int numKeys;	 // number of keys used to allocate keys array
-	bool isLeafNode; // returns true if node has no children
-	int minDegree;   // minimum degree
-
-
+	int numKeys;	    // number of keys used to allocate keys array
+	bool isLeafNode;    // returns true if node has no children
+	int minDegree;      // minimum degree
 };
 
 template<typename T>
@@ -55,8 +54,11 @@ public:
 	BTree(int minDegree) : root(nullptr), minDegree(minDegree) {}
 	~BTree() { delete root; }
 
-	void inOrder();
-	Node<T>* search(T key);
+	// Initiates recursive in-order traversal on the root node
+	void inOrder(const std::function<void(T&)>& func);
+	// Initiates recursive search on the root node
+	T search(T key);
+	// Inserts a new key T
 	void insert(T key);
 private:
 	Node<T>* root;
