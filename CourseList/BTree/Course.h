@@ -16,41 +16,38 @@
 #include<sstream>
 #include<string>
 
-using std::string;
-using std::vector;
-
 // Course class represents Course #, name and a list of prerequistites
 class Course {
 public:
 	Course() {}
-	Course(string courseNumber) : _courseNumber(courseNumber) {}
-	Course(string courseNumber, string name) : _courseNumber(courseNumber), _name(name) {}
-	Course(string courseNumber, string name, vector<string> prerequisites) :
+	Course(std::string courseNumber) : _courseNumber(courseNumber) {}
+	Course(std::string courseNumber, std::string name) : _courseNumber(courseNumber), _name(name) {}
+	Course(std::string courseNumber, std::string name, std::vector<std::string> prerequisites) :
 		_courseNumber(courseNumber), _name(name), _prerequisites(prerequisites) {}
 
-	string getCourseNumber() const { return this->_courseNumber; }
-	void setCourseNumber(string courseNumber) { this->_courseNumber = courseNumber; }
+	std::string getCourseNumber() const { return this->_courseNumber; }
+	void setCourseNumber(std::string courseNumber) { this->_courseNumber = courseNumber; }
 
-	string getName() const { return this->_name; }
-	void setName(string name) { this->_name = name; }
+	std::string getName() const { return this->_name; }
+	void setName(std::string name) { this->_name = name; }
 
-	vector<string> getPrerequisites() const { return this->_prerequisites; }
-	void addPrerequisite(string prerequisite) { this->_prerequisites.push_back(prerequisite); }
+	std::vector<std::string> getPrerequisites() const { return this->_prerequisites; }
+	void addPrerequisite(std::string prerequisite) { this->_prerequisites.push_back(prerequisite); }
 
 	// overloaded comparison operators using the courseNumber 'key'
 	bool operator<(const Course& rhs) const { return this->_courseNumber < rhs._courseNumber; }
 	bool operator>(const Course& rhs) const { return this->_courseNumber > rhs._courseNumber; }
 	bool operator==(const Course& rhs) const { return this->_courseNumber == rhs._courseNumber; }
 	// compare string key to object's courseNumber (for convenience)
-	bool operator==(const string& courseNum) const { return this->_courseNumber == courseNum; }
+	bool operator==(const std::string& courseNum) const { return this->_courseNumber == courseNum; }
 
 	// friend ostream method
 	friend std::ostream& operator<<(std::ostream& os, const Course& course);
 
 private:
-	string _courseNumber;
-	string _name;
-	vector<string> _prerequisites;
+	std::string _courseNumber;
+	std::string _name;
+	std::vector<std::string> _prerequisites;
 };
 
 // friend ostream overload for in-order traversal printing

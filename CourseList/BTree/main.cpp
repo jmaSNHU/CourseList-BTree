@@ -12,13 +12,13 @@
 // iterates through a vector of prereq course numbers
 // searches BST for each prereq course number 
 // takes nlogn time validate the BST.
-void validateCoursePrerequisites(vector<string> prequisiteCourseNumbers, BTree<Course>* courseBst) {
+void validateCoursePrerequisites(std::vector<std::string> prequisiteCourseNumbers, BTree<Course>* courseBst) {
 	// cancel validation if bst pointer is null
 	if (courseBst == nullptr) {
 		return;
 	}
 	// validate prerequisites
-	for (string prereq : prequisiteCourseNumbers) {
+	for (std::string prereq : prequisiteCourseNumbers) {
 		// make sure the prereq course exists
 		Course searchCourse = courseBst->search(prereq);
 		if (searchCourse.getCourseNumber().empty()) {
@@ -30,7 +30,7 @@ void validateCoursePrerequisites(vector<string> prequisiteCourseNumbers, BTree<C
 	}
 }
 
-void loadCourses(string filePath, BTree<Course>* bst) {
+void loadCourses(std::string filePath, BTree<Course>* bst) {
 
 	std::cout << "Loading CSV file " << filePath << std::endl;
 
@@ -42,13 +42,13 @@ void loadCourses(string filePath, BTree<Course>* bst) {
 	}
 
 	// tmp vector for validating prereqs after parsing the whole file
-	vector<string> prequisiteCourseNumbers;
-	string line;
+	std::vector<std::string> prequisiteCourseNumbers;
+	std::string line;
 	// read each line of the file...
 	while (std::getline(inFile, line)) {
 		std::stringstream ss(line);
-		string field;
-		vector<string> row_data;
+		std::string field;
+		std::vector<std::string> row_data;
 
 		// read each comma seperated field on the line...
 		while (std::getline(ss, field, ',')) {
@@ -90,9 +90,9 @@ void loadCourses(string filePath, BTree<Course>* bst) {
 int main(int argc, char* argv[]) {
 
 	// process command line arguments
-	vector<string> csvFiles;
-	string defaultFileName = "CS 300 ABCU_Advising_Program_Input.csv";
-	string courseKey;
+	std::vector<std::string> csvFiles;
+	std::string defaultFileName = "CS 300 ABCU_Advising_Program_Input.csv";
+	std::string courseKey;
 	switch (argc) {
 		// use default filename if user passes no args
 	case 1:
@@ -124,7 +124,7 @@ int main(int argc, char* argv[]) {
 		switch (choice) {
 		case 1:
 			// load each csv file passed to the program (or default file)
-			for (string csv : csvFiles) {
+			for (std::string csv : csvFiles) {
 				loadCourses(csv, bst);
 			}
 			break;
