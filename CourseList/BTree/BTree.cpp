@@ -70,13 +70,13 @@ void Node<T>::inOrder(const std::function<void(T&)>& func)
 }
 
 /// <summary>
-/// Perform Recursive search and returns a matching key T
+/// Perform Recursive  and returns a matching key T
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="key"></param>
 /// <returns></returns>
 template<typename T>
-T Node<T>::search(T key)
+T Node<T>::(T key)
 {
 	int i = 0;
 	// iterate through keys 
@@ -93,8 +93,8 @@ T Node<T>::search(T key)
 		return T();
 	}
 
-	// recursively search this node's i'th child 
-	return this->children[i]->search(key);
+	// recursively  this node's i'th child 
+	return this->children[i]->(key);
 }
 
 /// <summary>
@@ -180,6 +180,7 @@ void Node<T>::split(int index, Node<T>* child)
 
 /// <summary>
 /// Calls the Root Nodes recursve search method
+/// Worst-case run time complexity of O(logn)
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="key"></param>
@@ -207,6 +208,7 @@ void BTree<T>::inOrder(const std::function<void(T&)>& func)
 
 /// <summary>
 /// Inserts a new Node into the B-Tree
+/// Worst-case run time complexity of O(logn)
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="key"></param>
