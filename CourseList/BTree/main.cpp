@@ -203,7 +203,7 @@ void updateCoursePrerequistites(BTree<Course>* courseBTree) {
 			if (tmp == prereq)
 				prereq = tmp; // default behavior performs a shallow copy
 			else
-				prereq.setName("Course Present In File");
+				prereq.setName("Course Not Found");
 			course.setPrerequisites(prequistites);
 		}
 		};
