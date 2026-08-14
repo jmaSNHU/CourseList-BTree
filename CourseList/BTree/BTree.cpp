@@ -180,6 +180,7 @@ void Node<T>::split(int index, Node<T>* child)
 
 /// <summary>
 /// Calls the Root Nodes recursve search method
+/// Worst-case runtime complexity of O(logn)
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="key"></param>
@@ -196,6 +197,7 @@ T BTree<T>::search(T key)
 
 /// <summary>
 /// Starts the In-Order traversal on the root node
+/// O(n) runtime complexity (must visit each item in the tree)
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="func"></param>
@@ -207,6 +209,7 @@ void BTree<T>::inOrder(const std::function<void(T&)>& func)
 
 /// <summary>
 /// Inserts a new Node into the B-Tree
+/// Worst-case runtime complexity of O(logn)
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="key"></param>
