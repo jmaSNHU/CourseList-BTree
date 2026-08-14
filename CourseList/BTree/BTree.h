@@ -47,6 +47,12 @@ struct Node {
 	int minDegree;      // minimum degree
 };
 
+/// <summary>
+/// Templated B-Tree class
+/// Achieves O(logn) time complexity for 
+/// insert and search operations
+/// </summary>
+/// <typeparam name="T"></typeparam>
 template<typename T>
 class BTree {
 public:
@@ -54,10 +60,15 @@ public:
 	~BTree() { delete root; }
 
 	// Initiates recursive in-order traversal on the root node
+	// O(n) time complexity
 	void inOrder(const std::function<void(T&)>& func);
+
 	// Initiates recursive search on the root node
+	// O(logn) time complexity
 	T search(T key);
+
 	// Inserts a new key T
+	// O(logn) time complexity
 	void insert(T key);
 private:
 	Node<T>* root;
